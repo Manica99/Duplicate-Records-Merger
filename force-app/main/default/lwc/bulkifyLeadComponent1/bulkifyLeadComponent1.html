@@ -1,0 +1,103 @@
+<template>
+	<lightning-card>
+		<div class="slds-grid slds-gutters">
+			<div class="header1 ">
+
+				<div slot="title" style="display: flex; justify-content: center; align-items: center;">
+					<lightning-icon icon-name="standard:lead" size="medium"></lightning-icon>
+					<p class="Products"
+						style="display: inline-block; font-size: 20px; font-weight: 300; padding-left: 1rem; line-height:1.235;">
+						Lead</p>
+				</div>
+				<div class="RecordInfo">
+					<span class="slds-badge slds-badge_lightest" style="display:inline-block;">
+						Total Records: {totalRecords}
+					</span>
+
+					<span class="slds-badge slds-badge_lightest" style="display: inline-block;">
+						Page {currentPage} of {totalPages}
+					</span>
+				</div>
+				<div class="filterdiv" style="display: inline-flex;">
+					<lightning-button-icon icon-name="utility:filterList" alternative-text="filter" title="Filter"
+						style="margin-left:12rem;" onclick={handleFilter}>
+					</lightning-button-icon>
+					<lightning-button label="Merge All" title="Non-primary action" style="margin-left:2rem; width:200px;" onclick={handleMergeAll}></lightning-button>
+					<template if:true={listViewFilter}>
+						<c-list-view-filter parent-data={childDataFull} filter-value={filterList}
+							ongetfiltervalue={handelFilterValue} onclosefilter={handleCloseFilter}
+							ongetfilterlist={handleSavedFilterList}>
+						</c-list-view-filter>
+					</template>
+				</div>
+			</div>
+		</div>
+	</lightning-card>
+	<!-- <table class="slds-box slds-table slds-table_cell-buffer slds-table_bordered"> -->
+	<div class="datatble" onclick={mouseLocationDiv}>
+		<lightning-datatable class="datatable" data-id="dataT" key-field="Id" data={tableData} columns={columns}
+			draft-values={draftValues} hide-checkbox-column = "true" onsave={handleSave} editable="false"
+			onrowaction={onAction} >
+		</lightning-datatable>
+	</div>
+
+
+	<div class="slds-align_absolute-center"
+		style="display: inline-flex; background-color: white; width: 100%; padding: 1%;" onclick={handleback}>
+		<span style="margin-left: 1rem; padding-bottom: 0.2rem;">Page-Size:</span>
+		<div style="display: inline-flex; margin-right: auto; padding: 1%;">
+			<table style="padding: 1rem; height: -webkit-fill-available;">
+				<tr>
+					<td style="width:6%"> &nbsp; </td>
+					<td style="width:6%">
+						<lightning-combobox name="pickList" value={value} default="10" placeholder="10"
+							options={options} dropdown-alignment="auto" style="display: flex;"
+							onchange={handleChangeInRow}>
+						</lightning-combobox>
+					</td>
+					<td> &nbsp; </td>
+				</tr>
+			</table>
+		</div>
+		<div style="display: flex; align-items: center; width: 100%;     margin-left: 25%;">
+			<div class="slds-p-right_xx-small">
+				<lightning-button variant="base" disabled={bDisableFirst} icon-name="utility:jump_to_left"
+					class="slds-p-horizontal_x-small" alternative-text="first page" onclick={handleFirst}>
+				</lightning-button>
+
+				<lightning-button variant="base" disabled={bDisableFirst} icon-name="utility:chevronleft"
+					alternative-text="Previous" onclick={handlePrev}></lightning-button>
+			</div>
+
+
+			<div>
+				<template for:each={pageList} for:item="page">
+					<lightning-button key={page.id} class={page.class} label={page.value} onclick={processMe}>
+					</lightning-button>
+				</template>
+			</div>
+
+			<div class="slds-p-left_xx-small">
+				<lightning-button variant="base" disabled={bDisableLast} icon-name="utility:chevronright"
+					alternative-text="Next" onclick={handleNext} class="slds-p-horizontal_x-small"
+					icon-position="right">
+				</lightning-button>
+
+				<lightning-button variant="base" disabled={bDisableLast} icon-name="utility:jump_to_right"
+					alternative-text="last page" onclick={handleLast} icon-position="right"></lightning-button>
+			</div>
+		</div>
+	</div>
+
+	<!-- </table> -->
+	<template if:true={detailPage}>
+		<div>
+			<section style={subTableStyle}>
+				<div>
+					<c-child-duplicate-record selectedname={value} oncloseevent={handleCloseChild} ongetbool={handleback}>
+					</c-child-duplicate-record>
+				</div>
+			</section>
+		</div>
+	</template>
+</template>
