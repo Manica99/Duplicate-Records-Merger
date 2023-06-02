@@ -1,9 +1,0 @@
-<template>
-    <lightning-card title="Account Related Contacts" icon-name="utility:chart">
-        
-        <template if:true={chartConfiguration}>
-            <c-chart-js chart-config={chartConfiguration}></c-chart-js>
-        </template>
-        <lightning-button variant="base" label="Weekly" onclick={createPdf} class="slds-m-left_x-small"></lightning-button>
-</lightning-card>
-</template>
