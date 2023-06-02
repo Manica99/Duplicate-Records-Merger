@@ -1,0 +1,172 @@
+<template>
+    <div tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01">
+            <div style="display: block;  position: absolute; overflow: visible; margin-left: -24rem;z-index: 11; height: auto;" class="slds-panel slds-size_medium slds-panel_docked slds-panel_docked-right slds-grid slds-grid_vertical forceFilterPanel">
+            <div style=" background: white; z-index: 99;">
+                <div class="slds-panel__header panelHeader">
+                    <h2 class="slds-panel__header-title slds-text-heading_small slds-truncate">Filters</h2>
+                    <button onclick={handleCloseFilter} title="Close Filters" class="slds-button slds-button_icon slds-button_icon-small slds-panel__close">
+                        <lightning-icon size="x-small" icon-name="utility:close"></lightning-icon>
+                    </button>
+                </div>
+                <!-- <div>
+                    <template if:false={cpqGsaFilter}>
+                    <lightning-combobox class="fieldSelection slds-form-element" 
+                        name="priceBook"
+                        label="Price Book"
+                        value={value}
+                        options={priceBook}
+                        style="padding: 1rem;"
+                        onchange={handleChangePriceBook}>                                  
+                    </lightning-combobox>
+                </template>
+                </div> -->
+                <template if:true={showSpinner}>
+                    <lightning-spinner variant="brand" size="small"> </lightning-spinner>
+                </template>
+                <div style="overflow: visible;" class="slds-col slds-scrollable--y">
+                    <div class="slds-panel__body panelBody">
+                        <h3 class="bodyTitle">Matching all of these filters</h3>
+                        <ol>
+                            <template for:each={filterFieldList} for:item="filter">
+                                <li data-index={filter.index} key={filter} style="position: relative;margin-bottom: 10px;">
+
+                                    <div  data-index={filter.index} class="forceFilterPanelFilterCriterion">
+                                        <div data-index={filter.index} class="wrapper">
+                                            <a data-index={filter.index} class="trigger">
+                                                <span data-index={filter.index} class="filterInfoWrapper">
+                                                    <div data-index={filter.index} if:false={filter.hasSelected} class="fieldLabel">
+                                                        New Filter
+                                                        <span data-index={filter.index}>*</span>
+                                                    </div>
+                                                    <div data-index={filter.index} if:true={filter.hasSelected} class="fieldLabel">
+                                                        {filter.fieldLabel}
+                                                        <span data-index={filter.index}>*</span>
+                                                    </div>
+                                                    <span data-index={filter.index} class="operatorAndOperand">
+                                                        <span data-index={filter.index} class="test-operatorWrapper">{filter.operator}</span>
+                                                        &nbsp;
+                                                        <span if:false={filter.selectedField.isPicklist} data-index={filter.index} class="test-operandsWrapper">{filter.selectedValue}</span>
+                                                        <span if:true={filter.selectedField.isPicklist} data-index={filter.index} class="test-operandsWrapper">{filter.picklistLabel}</span>
+                                                    </span>
+                                                </span>
+                                            </a>
+                                            <a onclick={handleRemoveCurrentFilter} data-index={filter.index} class="closeX">
+                                                <lightning-icon data-index={filter.index} size="xx-small" icon-name="utility:close"></lightning-icon>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <section if:true={filter.isEdited} class="slds-popover slds-nubbin_right" role="dialog" style="display: block; z-index: 9002; position: absolute; top: -100px; right:310px; visibility: visible">
+                                        <div class="contanier">
+                                            <div class="panel-content scrollable">
+                                                <div class="forceFilterPanelCallout">
+                                                    <div>
+                                                        <div class="wrapper forceFilterPanelFieldSelector forceFilterPanelFilterEditor">
+                                                            <lightning-combobox class="fieldSelection slds-form-element" 
+                                                                name="progress"
+                                                                label="Field"
+                                                                value={filter.selectedField.value}
+                                                                options={fieldList}
+                                                                data-index={filter.index}
+                                                                onchange={handleChangeField}>
+                                                                
+                                                            </lightning-combobox>
+                                                        </div>
+                                                        <div class="wrapper forceFilterPanelFilterEditor">
+                                                            <lightning-combobox if:true={filter.selectedField.isText} class="fieldSelection slds-form-element" 
+                                                                name="progress"
+                                                                label="Operator"
+                                                                value={filter.selectedField.operator}
+                                                                options={textOperators}
+                                                                required="true"
+                                                                data-index={filter.index}
+                                                                onchange={handleChangeOperator}>
+                                                                
+                                                            </lightning-combobox>
+                                                            <lightning-combobox if:true={filter.selectedField.isPicklist} class="fieldSelection slds-form-element" 
+                                                                name="progress"
+                                                                label="Operator"
+                                                                value={filter.selectedField.operator}
+                                                                options={picklistOperators}
+                                                                required="true"
+                                                                data-index={filter.index}
+                                                                onchange={handleChangeOperator}>
+                                                                
+                                                            </lightning-combobox>
+                                                            <lightning-combobox if:true={filter.selectedField.isDouble} class="fieldSelection slds-form-element" 
+                                                                name="progress"
+                                                                label="Operator"
+                                                                value={filter.selectedField.operator}
+                                                                options={doubleOperators}
+                                                                required="true"
+                                                                data-index={filter.index}
+                                                                onchange={handleChangeOperator}>
+                                                                
+                                                            </lightning-combobox>
+                                                            <div>
+                                                                <div if:true={filter.selectedField.isText} class="forceRecordLayout">
+                                                                    <lightning-input value={filter.selectedField.selectedValue} data-index={filter.index} label="Value" onchange={handleChangeInput} class="filterTextInput valueInput input uiInput"></lightning-input>
+                                                                </div>
+                                                                <div if:true={filter.selectedField.isDouble} class="forceRecordLayout">
+                                                                    <lightning-input value={filter.selectedField.selectedValue} data-index={filter.index} label="Value" onchange={handleChangeInput} class="filterTextInput valueInput input uiInput"></lightning-input>
+                                                                </div>
+                                                                <div if:true={filter.selectedField.isPicklist} class="forceRecordLayout">
+                                                                    <lightning-combobox class="fieldSelection slds-form-element filterTextInput valueInput input uiInput" 
+                                                                        name="progress"
+                                                                        label="Value"
+                                                                        options={filter.selectedField.picklistValues}
+                                                                        data-index={filter.index}
+                                                                        required="true"
+                                                                        value={filter.selectedField.selectedValue}
+                                                                        onchange={handleChangeInput}>
+                                                                
+                                                                    </lightning-combobox>
+                                                                </div>
+                                                                <div if:true={filter.selectedField.isDate} class="forceRecordLayout">
+                                                                    <lightning-input value={filter.selectedField.startDate} data-index={filter.index} data-name="start" onchange={handleChangeInput} label="From" type="date" class="slds-form-element filterTextInput valueInput input uiInput">
+                                                                
+                                                                    </lightning-input>
+                                                                    <lightning-input value={filter.selectedField.endDate} data-index={filter.index} data-name="end" onchange={handleChangeInput} label="To" type="date" class="slds-form-element filterTextInput valueInput input uiInput">
+                                                                
+                                                                    </lightning-input>
+                                                                </div>
+                                                                <div if:true={filter.selectedField.isDateTime} class="forceRecordLayout">
+                                                                    <lightning-input value={filter.selectedField.startDateTime} data-index={filter.index} data-name="start" onchange={handleChangeInput} label="From" type="datetime" class="slds-form-element filterTextInput valueInput input uiInput">
+                                                                
+                                                                    </lightning-input>
+                                                                    <lightning-input value={filter.selectedField.endDateTime} data-index={filter.index} data-name="end" onchange={handleChangeInput} label="To" type="datetime" class="slds-form-element filterTextInput valueInput input uiInput">
+                                                                
+                                                                    </lightning-input>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <button onclick={handleSelectFieldDone} data-index={filter.index} class="slds-button slds-button--neutral doneButton uiButton">
+                                                        <span data-index={filter.index}>Done</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                </li>
+                            </template>
+                        </ol>
+                        <div class="addFilterRemoveAll" style="display: flex;justify-content: space-between;">
+                            <a role="button" class="addFilter" onclick={handleAddFilter}>Add Filter</a>
+                            <a role="button" class="removeAll" onclick={handleRemoveAll}>Remove All</a>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex;padding: 10px;">
+                    <div class="cancelButton">
+                        <button onclick={handleCloseFilter} type="button" class="slds-button slds-button_neutral">Cancel</button>
+                    </div>
+                    <div>
+                        <button onclick={handleSaveFilter} type="button" variant="brand" class="slds-button slds-button_neutral">Save</button>
+                    </div>
+                </div>.
+            </div>
+            </div>
+        </div> 
+</template>

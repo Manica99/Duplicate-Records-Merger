@@ -1,0 +1,151 @@
+<template>
+    <div style="width: 30%;">
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="6">
+                <div class="SideBar_top_div">
+                    
+                    <div style="height: calc(115px);
+                                Display: flex;
+                                justify-content: center;
+                                width: -webkit-fill-available;
+                                align-items: center;
+                                border-style: none !important;"> <img src={diggLogo} style="height: 54px;
+                                                                                  width: 65%;
+                                                                                  overflow-clip-margin: content-box;
+                                                                                  overflow: clip;"> </div>
+                    <div class="SideBar_divider"></div>
+                    <ul class="sidebar_ul">
+                        <template if:true={insightDisplay}>
+                            <div class="list_Collapse_div_1" style="margin-top : -0.15rem">
+                                <div class="list_Collapse_div_2">
+                                    <div class="list_Collapse_div_3" style="height:400px !important">
+                                                    <ul>
+                                                        <li class="inside_list" style="padding-top: 0.75rem !important"><img src={cmologo} class="icon"><span>CMO</span>
+                                                            <div class="SideBar_divider"></div>
+                                                            <ul>
+                                                                <li class="inside_inside_list marketing" onclick={handleMarketing}><img src={reportP} class="icon">Marketing Dashboard</li>
+                                                                <div class="SideBar_divider"></div>
+                                                                <li class="inside_inside_list"><img src={report} class="icon">Channel Performance</li>
+                                                                <div class="SideBar_divider"></div>
+                                                                <li class="inside_inside_list"><img src={report} class="icon">Sales Cycle</li>
+                                                                <div class="SideBar_divider"></div>
+                                                                <li class="inside_inside_list"><img src={report} class="icon">Cohort Report</li>
+                                                                <div class="SideBar_divider"></div>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="inside_list"><img src={marketinglogo} class="icon"><span>Marketing Ops</span>
+                                                            <div class="SideBar_divider"></div>
+                                                            <ul>
+                                                                <li class="inside_inside_list"><img src={report} class="icon">Path Length</li>
+                                                                <div class="SideBar_divider"></div>
+                                                                <li class="inside_inside_list"><img src={report} class="icon">Model Comparison</li>
+                                                                <div class="SideBar_divider"></div>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="inside_list"><img src={channelogo} class="icon"><span>Channel</span>
+                                                            <div class="SideBar_divider"></div>
+                                                            <ul>
+                                                                <li class="inside_inside_list"><img src={report} class="icon">Paid Media Tracker</li>
+                                                                <div class="SideBar_divider"></div>
+                                                                <li class="inside_inside_list"><img src={report} class="icon">Top Conversion Paths</li>
+                                                                <div class="SideBar_divider"></div>
+                                                                <li class="inside_inside_list"><img src={report} class="icon">User Path Analysis</li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <li class="list insight" onclick={handleInsight} data-value="insight"><img src={insightlogo}
+                                class="icon">Insights<div><lightning-button-icon icon-name={iconx1}
+                                    variant="bare"></lightning-button-icon></div>
+                        </li>
+                        <div class="SideBar_divider"></div>
+
+                        <template if:true={setupDisplay}>
+                            <div class="list_Collapse_div_1">
+                                    <div class="list_Collapse_div_2">
+                                        <div class="list_Collapse_div_3">
+
+                                                <ul>
+                        
+                                                    <li class="inside_list"><img src={campaignlogo} class="icon">Create Campaign</li>
+                                                    <div class="SideBar_divider"></div>
+                                                    <li class="inside_list"><img src={platformlogo} class="icon">Select Platform</li>
+                                                    <div class="SideBar_divider"></div>
+                                                    <li class="inside_list"><img src={channel_setupogo} class="icon">Channel Setup</li>
+                                                    <div class="SideBar_divider"></div>
+                                                    <li class="inside_list"><img src={attributelogo} class="icon">Attributes Setup</li>
+                                
+                                                </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                        <li class="list setup" onclick={handleSetup} data-value="setup"><img src={setuplogo}
+                                class="icon">Campaign Setup<div><lightning-button-icon icon-name={iconx2}
+                                    variant="bare"></lightning-button-icon></div>
+                        </li>
+                        <div class="SideBar_divider"></div>
+
+                        <template if:true={settingDisplay}>
+                            <div class="list_Collapse_div_1">
+                                    <div class="list_Collapse_div_2">
+                                        <div class="list_Collapse_div_3">
+
+                                                <ul>
+                        
+                                                    <li class="inside_list"><img src={user_managementlogo} class="icon">User Management</li>
+                                                    <div class="SideBar_divider"></div>
+                                                    <li class="inside_list"><img src={integrationlogo} class="icon">Integrations</li>
+                                                    <div class="SideBar_divider"></div>
+                                                    <li class="inside_list"><img src={setuplogo} class="icon">Channel Manager</li>
+                                
+                                                </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                        <li class="list setting" onclick={handleSetting} data-value="setting"><img src={settinglogo}
+                                class="icon">Settings<div><lightning-button-icon icon-name={iconx3}
+                                    variant="bare"></lightning-button-icon></div>
+                        </li>
+                        <div class="SideBar_divider"></div>
+
+                        <template if:true={dataDisplay}>
+                            <div class="list_Collapse_div_1">
+                                    <div class="list_Collapse_div_2">
+                                        <div class="list_Collapse_div_3">
+
+                                                <ul>
+                        
+                                                    <li class="inside_list"><img src={setuplogo} class="icon">SF Audit Report</li>
+                                
+                                                </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                        <li class="list data" onclick={handleData} data-value="data"><img src={datalogo}
+                                class="icon">Data Quality<div><lightning-button-icon icon-name={iconx4}
+                                    variant="bare"></lightning-button-icon></div>
+                        </li>
+                        <div class="SideBar_divider"></div>
+                    </ul>
+
+                </div>
+            </lightning-layout-item>
+
+        </lightning-layout>
+    </div>
+    <template if:true={marketing}>
+        <div style="float: right;">
+            <lightning-card title="MARKETING DASHBOARD">
+            </lightning-card>
+        </div>
+    </template>
+</template>
