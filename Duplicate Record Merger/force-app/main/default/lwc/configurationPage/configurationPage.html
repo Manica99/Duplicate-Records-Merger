@@ -1,0 +1,65 @@
+<template>
+	<lightning-card style="height:100%">
+		<div class="slds-grid slds-gutters">
+			<div class="slds-col slds-size_1-of-2">
+				<label>
+					<b>Object</b>
+					<abbr class="slds-required">*</abbr>
+				</label>
+				<lightning-input type="text" id="Object" value={objectValue} onkeyup={onHandleObjectSearch}
+					onchange={onHandleObjectSearch} class="allFieldCSS" placeholder="Search Object.." role="text"
+					style="width:99%;height:33px;border-color:#C8C8C8;border-width:thin;margin-top:-17px">
+				</lightning-input>
+				<template if:true={havingValue}>
+					<div id="listbox-id-2-venu" data-key="dropdownresult"
+						class="slds-show slds-dropdown_length-with-icon-7" role="listbox"
+						style="z-index:100;position:absolute;background-color:#FFFFFF;margin-top:17px">
+						<ul class="slds-listbox slds-listbox_vertical" role="presentation">
+							<!-- <template if:true={message}>
+					<p class="errorMsg">{message}</p>
+				</template> -->
+							<template for:each={objectList} for:item="record">
+								<li id={record.Id} key={record.Id} onclick={onobjectselection} role="presentation"
+									class="slds-listbox__item">
+									<div data-key={record.Id} data-name={record}
+										class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta"
+										role="option">
+										<span class="slds-media__body">
+								<span data-key={record.Id} data-name={record}
+									class="slds-listbox options-text slds-listbox__option-text_entity">{record}
+							    </span>
+										</span>
+									</div>
+								</li>
+							</template>
+						</ul>
+					</div>
+				</template>
+			</div>
+			<div class="slds-col slds-size_1-of-2">
+				<label>
+					<b>Fields</b>
+					<abbr class="slds-required">*</abbr>
+				</label>
+                <div class="slds-p-around_small">
+            <lightning-dual-listbox name="fields"
+                                    label="Select Fields"
+                                    source-label="Available"
+                                    selected-label="Selected"
+                                    field-level-help="Select Fields"
+                                    options={fieldOptions}
+                                    onchange={handleChange}></lightning-dual-listbox>
+                                    <br/>
+            <template if:true={lstSelected}>
+                <strong>You Selected: </strong>
+                <template for:each={lstSelected} for:item="sel">
+                    <p key={sel}>{sel}</p>
+                </template>
+            </template>
+        </div>
+			</div>
+		</div>
+	</lightning-card>
+
+
+</template>
